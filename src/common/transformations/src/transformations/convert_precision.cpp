@@ -367,7 +367,7 @@ bool ov::pass::ConvertPrecision::run_on_model(const std::shared_ptr<ov::Model>& 
     if (used_precisions.empty())
         return false;
 
-    bool has_fp16_compression = m_precisions.count(element::f32) > 0 && m_precisions[element::f32] == element::f16;
+    bool has_fp16_compression = m_precisions.count(element::f32) > 0 && (m_precisions[element::f32] == element::f16 || m_precisions[element::f32] == element::bf16);
 
     if (m_keep_precision_sensitive_in_fp32 && has_fp16_compression) {
         pass::Manager manager(get_pass_config());
