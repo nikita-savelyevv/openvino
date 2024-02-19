@@ -41,6 +41,14 @@ public:
     bool is_copyable() const override {
         return true;
     }
+
+    ov::Any merge(const NodeVector& nodes) const override {
+        for (auto& node : nodes) {
+            if (fp16_compression_is_disabled(node))
+                return DisableFP16Compression{};
+        }
+        return {};
+    }
 };
 
 }  // namespace ov
